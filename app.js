@@ -10,7 +10,13 @@ const _=require('lodash')
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
-mongoose.connect('mongodb+srv://yosephk:091136j@cluster0.xoj5fzx.mongodb.net/todolistDB');
+mongoose.connect('mongodb+srv://yosephk:091136j@cluster0.xoj5fzx.mongodb.net/todolistDB',(err)=>{
+if(err){
+  console.log(err)
+}else{
+console.log('connected to mongo atlas');
+}
+});
 const itemSchema=new mongoose.Schema({
   name:String
 })
