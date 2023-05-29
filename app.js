@@ -2,6 +2,7 @@
 list web application. It connects to a MongoDB database and defines a schema for items and lists. It
 has routes for displaying and adding items to the list, deleting items, and creating new lists. It
 also has a route for an about page. The application listens on port 5000 for incoming requests. */
+require('dotenv').config()
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
@@ -10,7 +11,7 @@ const _=require('lodash')
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
-mongoose.connect('mongodb+srv://yosephk:091136j@cluster0.xoj5fzx.mongodb.net/todolistDB');
+mongoose.connect(`mongodb+srv://yosephk:${process.env.PASSWORD}@cluster0.xoj5fzx.mongodb.net/todolistDB`);
 const itemSchema=new mongoose.Schema({
   name:String
 })
@@ -103,7 +104,7 @@ checkList()
 app.get("/about", function (req, res) {
   res.render("about");
 });
-
-app.listen(5000, function () {
+const PORT=process.env.PORT||5000;
+app.listen(PORT, function () {
   console.log("server is running on port 5000");
 });
